@@ -1,5 +1,6 @@
 package com.cybercarjava.domain.user.model;
 
+import com.cybercarjava.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Getter
 @Table(name = "users")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
