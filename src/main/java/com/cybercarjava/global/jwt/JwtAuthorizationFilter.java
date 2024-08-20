@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthorizationFilter  extends OncePerRequestFilter {
+public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserPrincipalService userPrincipalService;
@@ -30,25 +30,25 @@ public class JwtAuthorizationFilter  extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
-            String token = jwtUtil.getTokenFromReq(req);
+        String token = jwtUtil.getTokenFromReq(req);
 
-            if(Objects.nonNull(token)) {
-                if(jwtUtil.validateToken(token)){
-                    Claims info = jwtUtil.getUserInfoFromToken(token);
-                    String number = info.getSubject();
-                    SecurityContext context = SecurityContextHolder.createEmptyContext();
-                    UserPrincipalImpl userPrincipal = userPrincipalService.getUserPrincipal(number);
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
-                    context.setAuthentication(authentication);
-                    SecurityContextHolder.setContext(context);
-                } else {
-                    ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않는 토큰입니다");
-                    res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    res.setContentType("application/json; charset=UTF-8");
-                    res.getWriter().write(objectMapper.writeValueAsString(response));
-                    return;
-                }
+        if (Objects.nonNull(token)) {
+            if (jwtUtil.validateToken(token)) {
+                Claims info = jwtUtil.getUserInfoFromToken(token);
+                String number = info.getSubject();
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                UserPrincipalImpl userPrincipal = userPrincipalService.getUserPrincipal(number);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+            } else {
+                ResponseEntity<String> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않는 토큰입니다");
+                res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                res.setContentType("application/json; charset=UTF-8");
+                res.getWriter().write(objectMapper.writeValueAsString(response));
+                return;
             }
+        }
         filterChain.doFilter(req, res);
     }
 }

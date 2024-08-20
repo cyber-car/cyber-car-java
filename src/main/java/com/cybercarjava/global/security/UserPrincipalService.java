@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserPrincipalService {
     private final UserRepository userRepository;
 
-    public UserPrincipalImpl getUserPrincipal(String number){
+    public UserPrincipalImpl getUserPrincipal(String number) {
         User user = userRepository.findByNumber(number).orElseThrow(() -> new UsernameNotFoundException(number + "발견되지 않습니다."));
         return new UserPrincipalImpl(user);
     }

@@ -15,7 +15,6 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
-
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +42,7 @@ public class JwtUtil {
 
     @PostConstruct
     public void init() {
-        byte [] bytes = Base64.getDecoder().decode(secretKey);
+        byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes);
     }
 
@@ -51,35 +50,35 @@ public class JwtUtil {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch (SecurityException | MalformedJwtException e) {
+        } catch (SecurityException | MalformedJwtException e) {
             log.error("유효하지 않는 JWT 시그니처");
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             log.error("만료된 JWT 토큰");
-        } catch (UnsupportedJwtException e){
+        } catch (UnsupportedJwtException e) {
             log.error("지원하지 않는 JWT 토큰");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("비워있는 JWT claims");
         }
         return false;
     }
 
-    public Claims getUserInfoFromToken(String token){
+    public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public String createToken(String number){
+    public String createToken(String number) {
         Date date = new Date();
 
         return BEARER +
                 Jwts.builder()
-                    .setSubject(number)
-                    .setExpiration(new Date(date.getTime() + Long.parseLong(expiredPeriod)))
-                    .setIssuedAt(date)
-                    .signWith(key, signatureAlgorithm)
-                    .compact();
+                        .setSubject(number)
+                        .setExpiration(new Date(date.getTime() + Long.parseLong(expiredPeriod)))
+                        .setIssuedAt(date)
+                        .signWith(key, signatureAlgorithm)
+                        .compact();
     }
 
-    public void addJwtToCookie(String token, HttpServletResponse res){
+    public void addJwtToCookie(String token, HttpServletResponse res) {
         token = URLEncoder.encode(token, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20");
 
@@ -90,18 +89,16 @@ public class JwtUtil {
         res.addCookie(cookie);
     }
 
-    public String getTokenFromReq(HttpServletRequest req){
+    public String getTokenFromReq(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals(AUTHORIZATION)){
-                    return URLDecoder.decode(cookie.getValue().replaceAll("Bearea%20",""),
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(AUTHORIZATION)) {
+                    return URLDecoder.decode(cookie.getValue().replaceAll("Bearea%20", ""),
                             StandardCharsets.UTF_8);
                 }
             }
         }
         return null;
     }
-
-
 }

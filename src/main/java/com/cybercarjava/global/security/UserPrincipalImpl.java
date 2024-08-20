@@ -12,7 +12,7 @@ public class UserPrincipalImpl implements UserDetails {
     @Getter
     private final User user;
 
-    public UserPrincipalImpl(User user){
+    public UserPrincipalImpl(User user) {
         this.user = user;
     }
 
