@@ -1,0 +1,7 @@
+server:
+  port: 8081
+  jwt:
+    expired:
+      period: 64
+    secret:
+      key: awdWSGFVATF2awqedqdawsd12qedsaqedaddqdafdqdqwdqwdqwdxqAZXXZXXXVVAWEDQMKMLGMEQWLKDMKQLMDWLQMKDLKQMWLKDMWQLKDMQLW
