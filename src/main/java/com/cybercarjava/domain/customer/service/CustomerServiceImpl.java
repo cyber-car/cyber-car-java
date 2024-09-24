@@ -7,6 +7,7 @@ import com.cybercarjava.domain.customer.repository.CustomerRepository;
 import com.cybercarjava.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,6 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .phoneNumber(req.phoneNumber())
                 .guestName(req.guestName())
                 .memo(req.memo())
+                .user(user)
                 .build();
         customerRepository.save(customer);
     }
@@ -40,10 +42,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(CustomerRequest req, User user) {
-        Customer customer = customerRepository.findCustomerById(user.getId());
+    public void updateCustomer(CustomerRequest req, User user, Long customerId) {
+        Customer customer = customerRepository.findCustomerByIdAndUser(customerId, user);
 
-        if (customer != null){
+        if (customer != null) {
             customer.updateCarNumber(req.carNumber());
             customer.updateName(req.name());
             customer.updateCarModel(req.carModel());
@@ -53,14 +55,14 @@ public class CustomerServiceImpl implements CustomerService {
             customer.updateMemo(req.memo());
             customerRepository.save(customer);
         } else {
-            throw new  RuntimeException("DDD");
+            throw new RuntimeException("DDD");
             // 예외처리는 추후에 변경 예정
         }
     }
 
     @Override
     public void deleteCustomer(User user, Long customerId) {
-        Customer customer = customerRepository.findCustomerById(user.getId());
+        Customer customer = customerRepository.findCustomerByIdAndUser(customerId, user);
         customerRepository.delete(customer);
     }
 }

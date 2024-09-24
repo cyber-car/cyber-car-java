@@ -24,10 +24,11 @@ public class CustomerController {
     public ResponseEntity<String> createCustomer(
             @RequestBody CustomerRequest req,
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal
-            ) {
+    ) {
         customerService.createCustomer(req, userPrincipal.getUser());
         return ResponseEntity.status(HttpStatus.CREATED).body("고객 정보 등록");
     }
+
     @Operation(summary = "고객 정보 전체 조회하기")
     @GetMapping("/customer")
     public ResponseEntity<List<CustomerResponse>> getListCustomer(
@@ -35,22 +36,24 @@ public class CustomerController {
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.getListCustomer(userPrincipal.getUser()));
     }
+
     @Operation(summary = "고객 정보 단건 조회하기")
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<CustomerResponse> getCustomer(
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal,
-            @PathVariable (name = "customerId") Long customerId
+            @PathVariable(name = "customerId") Long customerId
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomer(userPrincipal.getUser(), customerId));
     }
 
     @Operation(summary = "고객 정보 수정하기")
-    @PatchMapping("/customer")
+    @PatchMapping("/customer/{customerId}")
     public ResponseEntity<String> updateCustomer(
+            @PathVariable(name = "customerId") Long customerId,
             @RequestBody CustomerRequest req,
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal
     ) {
-        customerService.updateCustomer(req, userPrincipal.getUser());
+        customerService.updateCustomer(req, userPrincipal.getUser(), customerId);
         return ResponseEntity.status(HttpStatus.OK).body("고객 정보 수정");
     }
 
@@ -58,9 +61,9 @@ public class CustomerController {
     @DeleteMapping("/customer/{customerId}")
     public ResponseEntity<String> deleteCustomer(
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal,
-            @PathVariable (name = "customerId") Long customerId
+            @PathVariable(name = "customerId") Long customerId
     ) {
         customerService.deleteCustomer(userPrincipal.getUser(), customerId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("고객 정보 등록");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("고객 정보 삭제");
     }
 }

@@ -19,6 +19,6 @@ public record CustomerRequest(
         String guestName,
 
         String memo
-){
+) {
 
 }
