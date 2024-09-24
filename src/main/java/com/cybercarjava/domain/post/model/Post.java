@@ -37,7 +37,7 @@ public class Post extends BaseTimeEntity {
     private String royalty;
 
     @Column
-    private String quantity;
+    private int quantity;
 
     @Column
     private String mileage;
@@ -50,7 +50,7 @@ public class Post extends BaseTimeEntity {
     private PostStatus postStatus;
 
     @Builder
-    public Post(User user, Customer customer, String content, String partsPrice, String royalty, String quantity, String mileage, String engineer,PostStatus postStatus) {
+    public Post(User user, Customer customer, String content, String partsPrice, String royalty, int quantity, String mileage, String engineer,PostStatus postStatus) {
         this.user = user;
         this.customer = customer;
         this.content = content;
