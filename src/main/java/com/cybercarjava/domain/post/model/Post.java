@@ -28,6 +28,9 @@ public class Post extends BaseTimeEntity {
     private User user;
 
     @Column
+    private String partsNumber;
+
+    @Column
     private String content;
 
     @Column
@@ -49,10 +52,15 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private PartGrade partGrade;
+
     @Builder
-    public Post(User user, Customer customer, String content, String partsPrice, String royalty, int quantity, String mileage, String engineer,PostStatus postStatus) {
+    public Post(User user, Customer customer, String partsNumber, String content, String partsPrice, String royalty, int quantity, String mileage, String engineer, PostStatus postStatus, PartGrade partGrade) {
         this.user = user;
         this.customer = customer;
+        this.partsNumber = partsNumber;
         this.content = content;
         this.partsPrice = partsPrice;
         this.royalty = royalty;
@@ -60,5 +68,34 @@ public class Post extends BaseTimeEntity {
         this.mileage = mileage;
         this.engineer = engineer;
         this.postStatus = postStatus;
+        this.partGrade = partGrade;
+    }
+
+    public void updatePartsNumber(String partsNumber) {
+        this.partsNumber = partsNumber;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public void updatePartsPrice(String partsPrice) {
+        this.partsPrice = partsPrice;
+    }
+
+    public void updateRoyalty(String royalty) {
+        this.royalty = royalty;
+    }
+
+    public void updateQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void updateMileage(String mileage) {
+        this.mileage = mileage;
+    }
+
+    public void updateEngineer(String engineer) {
+        this.engineer = engineer;
     }
 }

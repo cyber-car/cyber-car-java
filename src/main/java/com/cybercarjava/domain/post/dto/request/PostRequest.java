@@ -2,26 +2,26 @@ package com.cybercarjava.domain.post.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record PostRequest (
+public record PostRequest(
 
-    String partsNumber,
+        String partsNumber,
 
-    @NotBlank(message = "작업내용을 입력해주세요")
-    String Content,
+        @NotBlank(message = "작업내용을 입력해주세요")
+        String content,
 
-    String partsPrice,
+        String partsPrice,
 
-    String royalty,
+        String royalty,
 
-    int quantity,
+        int quantity,
 
-    @NotBlank(message = "주행 거리를 입력해주세요")
-    String mileage,
+        @NotBlank(message = "주행 거리를 입력해주세요")
+        String mileage,
 
-    @NotBlank(message = "담당 엔지니어의 이름을 입력해주세요")
-    String engineer,
+        @NotBlank(message = "담당 엔지니어의 이름을 입력해주세요")
+        String engineer,
 
-    String partGrade
-){
+        String partGrade
+) {
 
 }
