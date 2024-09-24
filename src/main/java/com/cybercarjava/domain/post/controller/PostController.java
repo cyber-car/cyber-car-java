@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @Operation(summary = " 게시물 등록하기")
+    @Operation(summary = "게시물 등록하기")
     @PostMapping
     public ResponseEntity<String> createPost(
             @RequestBody PostRequest req,
