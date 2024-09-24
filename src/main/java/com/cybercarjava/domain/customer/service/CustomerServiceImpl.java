@@ -7,6 +7,7 @@ import com.cybercarjava.domain.customer.repository.CustomerRepository;
 import com.cybercarjava.domain.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(CustomerRequest req, User user, Long customerId) {
         Customer customer = customerRepository.findCustomerByIdAndUser(customerId, user);
 
-        if (customer != null){
+        if (customer != null) {
             customer.updateCarNumber(req.carNumber());
             customer.updateName(req.name());
             customer.updateCarModel(req.carModel());
@@ -54,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.updateMemo(req.memo());
             customerRepository.save(customer);
         } else {
-            throw new  RuntimeException("DDD");
+            throw new RuntimeException("DDD");
             // 예외처리는 추후에 변경 예정
         }
     }

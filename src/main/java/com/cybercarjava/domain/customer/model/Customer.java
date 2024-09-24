@@ -55,7 +55,7 @@ public class Customer extends BaseTimeEntity {
             String guestName,
             String memo,
             User user
-    ){
+    ) {
         this.carNumber = carNumber;
         this.name = name;
         this.carModel = carModel;
@@ -66,31 +66,31 @@ public class Customer extends BaseTimeEntity {
         this.user = user;
     }
 
-    public void updateCarNumber(String carNumber){
+    public void updateCarNumber(String carNumber) {
         this.carNumber = carNumber;
     }
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
 
-    public void updateCarModel(String carModel){
+    public void updateCarModel(String carModel) {
         this.carModel = carModel;
     }
 
-    public void updatePinNumber(String pinNumber){
+    public void updatePinNumber(String pinNumber) {
         this.pinNumber = pinNumber;
     }
 
-    public void updatePhoneNumber(String phoneNumber){
+    public void updatePhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void updateGuestName(String guestName){
+    public void updateGuestName(String guestName) {
         this.guestName = guestName;
     }
 
-    public void updateMemo(String memo){
+    public void updateMemo(String memo) {
         this.memo = memo;
     }
 
