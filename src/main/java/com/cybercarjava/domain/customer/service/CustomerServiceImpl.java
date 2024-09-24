@@ -25,6 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .phoneNumber(req.phoneNumber())
                 .guestName(req.guestName())
                 .memo(req.memo())
+                .user(user)
                 .build();
         customerRepository.save(customer);
     }
@@ -40,8 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(CustomerRequest req, User user) {
-        Customer customer = customerRepository.findCustomerById(user.getId());
+    public void updateCustomer(CustomerRequest req, User user, Long customerId) {
+        Customer customer = customerRepository.findCustomerByIdAndUser(customerId, user);
 
         if (customer != null){
             customer.updateCarNumber(req.carNumber());
@@ -60,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(User user, Long customerId) {
-        Customer customer = customerRepository.findCustomerById(user.getId());
+        Customer customer = customerRepository.findCustomerByIdAndUser(customerId, user);
         customerRepository.delete(customer);
     }
 }

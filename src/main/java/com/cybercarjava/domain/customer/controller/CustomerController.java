@@ -45,12 +45,13 @@ public class CustomerController {
     }
 
     @Operation(summary = "고객 정보 수정하기")
-    @PatchMapping("/customer")
+    @PatchMapping("/customer/{customerId}")
     public ResponseEntity<String> updateCustomer(
+            @PathVariable (name = "customerId") Long customerId,
             @RequestBody CustomerRequest req,
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal
     ) {
-        customerService.updateCustomer(req, userPrincipal.getUser());
+        customerService.updateCustomer(req, userPrincipal.getUser(), customerId);
         return ResponseEntity.status(HttpStatus.OK).body("고객 정보 수정");
     }
 
@@ -61,6 +62,6 @@ public class CustomerController {
             @PathVariable (name = "customerId") Long customerId
     ) {
         customerService.deleteCustomer(userPrincipal.getUser(), customerId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("고객 정보 등록");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("고객 정보 삭제");
     }
 }

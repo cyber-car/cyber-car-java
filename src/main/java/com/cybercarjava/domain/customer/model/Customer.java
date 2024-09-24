@@ -1,5 +1,6 @@
 package com.cybercarjava.domain.customer.model;
 
+import com.cybercarjava.domain.user.model.User;
 import com.cybercarjava.global.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -34,6 +35,10 @@ public class Customer extends BaseTimeEntity {
     @Column(nullable = false)
     private String phoneNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column
     private String guestName;
 
@@ -48,7 +53,8 @@ public class Customer extends BaseTimeEntity {
             String pinNumber,
             String phoneNumber,
             String guestName,
-            String memo
+            String memo,
+            User user
     ){
         this.carNumber = carNumber;
         this.name = name;
@@ -57,6 +63,7 @@ public class Customer extends BaseTimeEntity {
         this.phoneNumber = phoneNumber;
         this.guestName = guestName;
         this.memo = memo;
+        this.user = user;
     }
 
     public void updateCarNumber(String carNumber){
