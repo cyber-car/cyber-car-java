@@ -2,6 +2,7 @@ package com.cybercarjava.domain.post.controller;
 
 import com.cybercarjava.domain.post.dto.request.PostRequest;
 import com.cybercarjava.domain.post.dto.response.PostResponse;
+import com.cybercarjava.domain.post.model.Calculation;
 import com.cybercarjava.domain.post.model.PartGrade;
 import com.cybercarjava.domain.post.model.PostStatus;
 import com.cybercarjava.domain.post.service.PostService;
@@ -28,9 +29,10 @@ public class PostController {
             @RequestBody PostRequest req,
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal,
             @RequestParam PostStatus postStatus,
-            @RequestParam PartGrade partGrade
+            @RequestParam PartGrade partGrade,
+            @RequestParam Calculation calculation
     ) {
-        postService.createPost(req, userPrincipal.getUser(), partGrade, postStatus);
+        postService.createPost(req, userPrincipal.getUser(), partGrade, postStatus, calculation);
         return ResponseEntity.status(HttpStatus.CREATED).body("고객 정보 등록");
     }
 
@@ -49,9 +51,10 @@ public class PostController {
             @RequestBody PostRequest req,
             @AuthenticationPrincipal UserPrincipalImpl userPrincipal,
             @RequestParam PostStatus postStatus,
-            @RequestParam PartGrade partGrade
+            @RequestParam PartGrade partGrade,
+            @RequestParam Calculation calculation
     ) {
-        postService.updatePost(req, userPrincipal.getUser(), postId, partGrade, postStatus);
+        postService.updatePost(req, userPrincipal.getUser(), postId, partGrade, postStatus, calculation);
         return ResponseEntity.status(HttpStatus.OK).body("게시물 수정");
     }
 

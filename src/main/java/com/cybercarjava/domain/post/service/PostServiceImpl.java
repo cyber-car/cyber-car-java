@@ -3,6 +3,7 @@ package com.cybercarjava.domain.post.service;
 import com.cybercarjava.domain.customer.repository.CustomerRepository;
 import com.cybercarjava.domain.post.dto.request.PostRequest;
 import com.cybercarjava.domain.post.dto.response.PostResponse;
+import com.cybercarjava.domain.post.model.Calculation;
 import com.cybercarjava.domain.post.model.PartGrade;
 import com.cybercarjava.domain.post.model.Post;
 import com.cybercarjava.domain.post.model.PostStatus;
@@ -21,7 +22,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public void createPost(PostRequest req, User user, PartGrade partGrade, PostStatus postStatus) {
+    public void createPost(PostRequest req, User user, PartGrade partGrade, PostStatus postStatus, Calculation calculation) {
         Post post = Post.builder()
                 .content(req.content())
                 .partsPrice(req.partsPrice())
@@ -30,6 +31,8 @@ public class PostServiceImpl implements PostService {
                 .mileage(req.mileage())
                 .engineer(req.engineer())
                 .partGrade(partGrade)
+                .postStatus(postStatus)
+                .calculation(calculation)
                 .user(user)
                 .build();
         postRepository.save(post);
@@ -41,17 +44,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void updatePost(PostRequest req, User user, Long postId, PartGrade partGrade, PostStatus postStatus) {
+    public void updatePost(PostRequest req, User user, Long postId, PartGrade partGrade, PostStatus postStatus, Calculation calculation) {
         Post post = postRepository.findPostByIdAndUser(postId, user);
 
         if (post != null) {
-            post.updatePartsNumber(req.partsNumber());
-            post.updateContent(req.content());
-            post.updatePartsPrice(req.partsPrice());
-            post.updateRoyalty(req.royalty());
-            post.updateQuantity(req.quantity());
-            post.updateMileage(req.mileage());
-            post.updateEngineer(req.engineer());
+            post.updatePost(
+                    req.partsNumber(),
+                    req.content(),
+                    req.partsPrice(),
+                    req.royalty(),
+                    req.quantity(),
+                    req.mileage(),
+                    req.engineer(),
+                    postStatus,
+                    partGrade,
+                    calculation
+            );
             postRepository.save(post);
         } else {
             throw new RuntimeException("DDD");
