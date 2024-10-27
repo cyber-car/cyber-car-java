@@ -3,7 +3,6 @@ package com.cybercarjava.domain.customer.service;
 import com.cybercarjava.domain.customer.dto.CustomerRequest;
 import com.cybercarjava.domain.customer.dto.CustomerResponse;
 import com.cybercarjava.domain.user.model.User;
-
 import java.util.List;
 
 public interface CustomerService {

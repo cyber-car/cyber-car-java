@@ -6,7 +6,6 @@ import com.cybercarjava.domain.post.model.Calculation;
 import com.cybercarjava.domain.post.model.PartGrade;
 import com.cybercarjava.domain.post.model.PostStatus;
 import com.cybercarjava.domain.user.model.User;
-
 import java.util.List;
 
 public interface PostService {
